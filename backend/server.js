@@ -1,4 +1,4 @@
-// Require
+// Basic express server setup
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -18,6 +18,14 @@ const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully.");
 });
+
+// Connect to database files and add as routes
+const lessonsRouter = require('./routes/lessons');
+const studentsRouter = require('./routes/students');
+
+// Define routes
+app.use('/lessons', lessonsRouter);
+app.use('/students', studentsRouter);
 
 
 app.listen(port, () => {

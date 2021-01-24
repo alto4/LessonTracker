@@ -12,8 +12,6 @@ const studentSchema = new Schema({
   },
   instrument: {
     type: String,
-    required: true,
-    trim: true,
   },
   age: {
     type: Number,

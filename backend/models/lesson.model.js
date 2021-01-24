@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const lessonSchema = new Schema({
   student: { type: String, required: true },
   date: { type: Date, required: true },
-  length: { type: Number, required: true },
+  length: { type: String },
   plan: { type: String },
   notes: { type: String },
   resources: { type: String },
