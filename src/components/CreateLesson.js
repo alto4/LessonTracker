@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-
+import React, { Component } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 class CreateLesson extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +16,7 @@ class CreateLesson extends Component {
 
     // State management for new lesson
     this.state = {
+      students: [],
       student: '',
       date: new Date(),
       length: '',
@@ -28,8 +30,8 @@ class CreateLesson extends Component {
   // componentDidMount
   componentDidMount() {
     this.setState({
-      students: 'test student',
-      student: 'test sutdent'
+      students: ['Ciaran', 'Cassy', 'Mckale', 'William + Yigu', 'Jason', 'Alfred', 'Sloane', 'Brendan', 'Olivia', 'Magda', 'Akain', 'Lance'],
+      student: 'Ciaran'
     });
   }
   // onChangeStudent
@@ -102,7 +104,77 @@ class CreateLesson extends Component {
     return (
       <div>
         <h1>Create Lesson</h1>
-        
+
+        <form onSubmit={this.onSubmit} >
+          <div className="form-group">
+            <label>Student: </label>
+            <select 
+              required 
+              className="form-control"
+              value={this.state.student}
+              onChange={this.onChangeStudent}>
+
+              {
+                this.state.students.map(function(student) {
+                  return <option key={student} value={student}>{student}</option>
+                })
+              }
+            </select>
+          </div>
+          <div className="form-group">
+              <label>Date: </label>
+              <div>
+                <DatePicker 
+                  selected={this.state.date}
+                  onChange={this.onChangeDate}
+                />
+              </div>
+          </div>
+          <div className="form-group">
+              <label>Length: </label>
+              <input 
+                type="text" className="form-control" 
+                value={this.state.length}
+                onChange={this.onChangeLength}
+              />
+          </div>
+          <div className="form-group">
+              <label>Plan: </label>
+              <input 
+                type="text" className="form-control" 
+                value={this.state.plan}
+                onChange={this.onChangePlan}
+              />
+          </div>
+          <div className="form-group">
+              <label>Notes: </label>
+              <input 
+                type="text" className="form-control" 
+                value={this.state.notes}
+                onChange={this.onChangeNotes}
+              />
+          </div>
+          <div className="form-group">
+              <label>Resources: </label>
+              <input 
+                type="text" className="form-control" 
+                value={this.state.resources}
+                onChange={this.onChangeResources}
+              />
+          </div>
+          <div className="form-group">
+              <label>Comments: </label>
+              <input 
+                type="text" className="form-control" 
+                value={this.state.comments}
+                onChange={this.onChangeComments}
+              />
+          </div>
+
+          <div className="form-group">
+            <input type="submit" value="Create" className="btn btn-success"/>
+          </div>
+        </form>        
       </div>
     )
   }
