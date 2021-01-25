@@ -13,10 +13,10 @@ class CreateLesson extends Component {
     this.onChangeNotes = this.onChangeNotes.bind(this);
     this.onChangeResources = this.onChangeResources.bind(this);
     this.onChangeComments = this.onChangeComments.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
     // State management for new lesson
     this.state = {
-      students: [],
       student: '',
       date: new Date(),
       length: '',
@@ -24,6 +24,7 @@ class CreateLesson extends Component {
       notes: '',
       resources: '',
       comments: '',
+      students: []
     }
   } 
 
@@ -98,6 +99,8 @@ class CreateLesson extends Component {
     }
 
      console.log(lesson);
+
+     //window.location ='/';
   }
 
   render() {
@@ -108,14 +111,14 @@ class CreateLesson extends Component {
         <form onSubmit={this.onSubmit} >
           <div className="form-group">
             <label>Student: </label>
-            <select 
+            <select
               required 
               className="form-control"
               value={this.state.student}
               onChange={this.onChangeStudent}>
 
               {
-                this.state.students.map(function(student) {
+               this.state.students && this.state.students.map(function(student) {
                   return <option key={student} value={student}>{student}</option>
                 })
               }
