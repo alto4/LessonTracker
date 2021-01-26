@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
+
+import axios from 'axios';
 class CreateStudent extends Component {
   constructor(props) {
     super(props);
@@ -17,12 +18,12 @@ class CreateStudent extends Component {
     this.state = {
       name: '',
       instruments: ['Guitar', 'Piano', 'Bass', 'Drums', 'Ukulele', 'Theory', 'Musicianship'],
-      age: '',
+      age: 0,
       parent: '',
       email: '',
       phone: ''
     }
-  } 
+  }
 
   // componentDidMount
   componentDidMount() {
@@ -44,11 +45,11 @@ class CreateStudent extends Component {
       instrument: e.target.value,
     });
   }
-  
+
   // onChangeAge
   onChangeAge(e) {
     this.setState({
-      age: e.target.value,
+      age: Number(e.target.value),
     });
   }
 
@@ -85,42 +86,50 @@ class CreateStudent extends Component {
     e.preventDefault();
 
     const student = {
-      name: this.state.name,
-      instrument: this.state.instrument,
-      age: this.state.age,
-      parent: this.state.parent,
-      email: this.state.email,
-      phone: this.state.phone
+      "name": this.state.name,
+      "instrument": this.state.instrument,
+      "age": this.state.age,
+      "parent": this.state.parent,
+      "email": this.state.email,
+      "phone": this.state.phone
     }
 
      console.log(student);
 
-     window.location ='/';
+     // Add student to database
+      axios.post('http://localhost:5000/students/add', student)
+       .then(res => console.log(res.data));
+
+     this.setState({
+      name: '',
+      instruments: ['Guitar', 'Piano', 'Bass', 'Drums', 'Ukulele', 'Theory', 'Musicianship'],
+      age: 0,
+      parent: '',
+      email: '',
+      phone: ''
+     })
   }
 
   render() {
     return (
       <div>
-        <h1>Create Student</h1>
-
-        <form onSubmit={this.onSubmit} >
-
+        <h1 className="text-center mx-auto">Create Student</h1>
+        <form className="col-lg-6 col-md-8 mx-auto" onSubmit={this.onSubmit} >
           <div className="form-group">
-              <label>Name: </label>
-              <input 
-                type="text" className="form-control" 
-                value={this.state.name}
-                onChange={this.onChangeName}
-              />
+            <label>Name: </label>
+            <input
+              type="text" className="form-control"
+              value={this.state.name}
+              onChange={this.onChangeName}
+            />
           </div>
           <div className="form-group">
             <label>Instrument: </label>
             <select
-              required 
+              required
               className="form-control"
               value={this.state.instrument}
               onChange={this.onChangeInstrument}>
-
               {
                this.state.instruments && this.state.instruments.map(function(instrument) {
                   return <option key={instrument} value={instrument}>{instrument}</option>
@@ -129,41 +138,41 @@ class CreateStudent extends Component {
             </select>
           </div>
           <div className="form-group">
-              <label>Age: </label>
-              <input 
-                type="text" className="form-control" 
-                value={this.state.age}
-                onChange={this.onChangeAge}
-              />
+            <label>Age: </label>
+            <input
+              type="text" className="form-control"
+              value={this.state.age}
+              onChange={this.onChangeAge}
+            />
           </div>
           <div className="form-group">
-              <label>Parent: </label>
-              <input 
-                type="text" className="form-control" 
-                value={this.state.parent}
-                onChange={this.onChangeParent}
-              />
+            <label>Parent: </label>
+            <input
+              type="text" className="form-control"
+              value={this.state.parent}
+              onChange={this.onChangeParent}
+            />
           </div>
           <div className="form-group">
-              <label>Email: </label>
-              <input 
-                type="text" className="form-control" 
-                value={this.state.email}
-                onChange={this.onChangeEmail}
-              />
+            <label>Email: </label>
+            <input
+              type="text" className="form-control"
+              value={this.state.email}
+              onChange={this.onChangeEmail}
+            />
           </div>
           <div className="form-group">
-              <label>Phone: </label>
-              <input 
-                type="text" className="form-control" 
-                value={this.state.phone}
-                onChange={this.onChangePhone}
-              />
+            <label>Phone: </label>
+            <input
+              type="text" className="form-control"
+              value={this.state.phone}
+              onChange={this.onChangePhone}
+            />
           </div>
           <div className="form-group">
-            <input type="submit" value="Create" className="btn btn-success"/>
+            <input type="submit" value="Create" className="btn btn-success btn-block"/>
           </div>
-        </form>        
+        </form>
       </div>
     )
   }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
+import axios from 'axios';
 class CreateLesson extends Component {
   constructor(props) {
     super(props);
@@ -30,10 +32,15 @@ class CreateLesson extends Component {
 
   // componentDidMount
   componentDidMount() {
-    this.setState({
-      students: ['Ciaran', 'Cassy', 'Mckale', 'William + Yigu', 'Jason', 'Alfred', 'Sloane', 'Brendan', 'Olivia', 'Magda', 'Akain', 'Lance'],
-      student: 'Ciaran'
-    });
+    axios.get('http://localhost:5000/students/')
+      .then(res => {
+        if (res.data.length > 0) {
+          this.setState({
+            students: res.data.map(student => student.name),
+            student: res.data[0].name
+          })
+        }
+      })
   }
   // onChangeStudent
   onChangeStudent(e) {
@@ -89,26 +96,38 @@ class CreateLesson extends Component {
     e.preventDefault();
 
     const lesson = {
-      student: this.state.student,
-      date: this.state.date,
-      length: this.state.length,
-      plan: this.state.plan,
-      notes: this.state.notes,
-      resources: this.state.resources,
-      comments: this.state.comments
+      "student": this.state.student,
+      "date": this.state.date,
+      "length": this.state.length,
+      "plan": this.state.plan,
+      "notes": this.state.notes,
+      "resources": this.state.resources,
+      "comments": this.state.comments
     }
 
      console.log(lesson);
 
-     //window.location ='/';
+     // Add student to database
+      axios.post('http://localhost:5000/lessons/add', lesson)
+       .then(res => console.log(res.data));
+
+     this.setState({
+      student: '',
+      length: '',
+      plan: '',
+      notes: '',
+      resources: '',
+      comments: ''
+     })
+
+     window.location ='/';
   }
 
   render() {
     return (
       <div>
-        <h1>Create Lesson</h1>
-
-        <form onSubmit={this.onSubmit} >
+        <h1 className="text-center mx-auto">Create Lesson</h1>
+        <form className="col-lg-6 col-md-8 mx-auto" onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Student: </label>
             <select
@@ -116,7 +135,6 @@ class CreateLesson extends Component {
               className="form-control"
               value={this.state.student}
               onChange={this.onChangeStudent}>
-
               {
                this.state.students && this.state.students.map(function(student) {
                   return <option key={student} value={student}>{student}</option>
@@ -175,7 +193,7 @@ class CreateLesson extends Component {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Create" className="btn btn-success"/>
+            <input type="submit" value="Create" className="btn btn-success btn-block"/>
           </div>
         </form>        
       </div>
