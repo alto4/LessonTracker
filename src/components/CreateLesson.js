@@ -40,7 +40,7 @@ class CreateLesson extends Component {
             student: res.data[0].name
           })
         }
-      })
+      });
   }
   // onChangeStudent
   onChangeStudent(e) {
