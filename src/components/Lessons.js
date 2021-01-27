@@ -41,7 +41,7 @@ class Lessons extends Component {
   render() {
     return (
       <div>
-        <h1>Lessons Index</h1>
+        <h1 className="text-center mx-auto">Lessons Index</h1>
         <div className="row justify-content-center">
           {this.state.lessons.map(lesson => (
             <Lesson lesson={lesson} deleteLesson={this.deleteLesson} key={lesson._id} />
