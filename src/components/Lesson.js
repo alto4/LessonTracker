@@ -8,7 +8,7 @@ const Lesson = (props) => {
   const lessonLink = `/edit/${_id}`;
 
   return (
-   <div className="card text-center col-3 p-4 m-3">
+   <div className="card text-center col-3 p-4 m-3 text-dark">
      <h3>{student}</h3>
      <h5>{date.substring(0,10)} at 4PM <span className="small">({length}m)</span></h5>
     <p className="p-3">{plan}</p>
