@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // Import components
 import Navbar from './components/Navbar';
 import Lessons from './components/Lessons';
+import Students from './components/Students';
 import CreateLesson from './components/CreateLesson';
 import CreateStudent from './components/CreateStudent';
 import EditLesson from './components/EditLesson';
@@ -18,6 +19,7 @@ function App() {
         <Navbar />
         <div className="container my-5">
           <Route path='/' exact component={Lessons} /> 
+          <Route path='/students' exact component={Students} />
           <Route path='/edit/:id' exact component={EditLesson} />
           <Route path='/student/edit/:id' exact component={EditStudent} />
           <Route path='/create' exact component={CreateLesson} />

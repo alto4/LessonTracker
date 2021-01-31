@@ -112,7 +112,7 @@ class EditStudent extends Component {
       phone: ''
      })
 
-     window.location ='/';
+     window.location ='/students';
   }
 
   render() {
